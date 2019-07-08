@@ -134,8 +134,8 @@ class Autho {
         }
 
 
-        foreach ($fields as $fieldName => $value) {
-
+        foreach ($fields as $field => $value) {
+            //Set data for db query
         }
     }
 
