@@ -100,4 +100,47 @@ class Autho {
             return $e;
         }
     }
+
+    public static function registerUser(array $fields,
+                                        string $table = 'users',
+                                        string $hash  = 'bcrypt',
+                                        bool $usePassword = true)
+    {
+        $hash_algo = "";
+        switch ($hash) {
+            case $hash == 'bcrypt':
+                $hash_algo = 'PASSWORD_BCRYPT';
+                break;
+            case $hash = 'default':
+                $hash_algo = 'PASSWORD_DEFAULT';
+                break;
+            case $hash = 'argon2i':
+                $hash_algo = 'PASSWORD_ARGON2I';
+                break;
+            case $hash = 'argon2id':
+                $hash_algo = 'PASSWORD_ARGON2ID';
+                break;
+        }
+        if($usePassword) {
+            try {
+                if (!isset($fields['password'])) {
+                    throw new Exception('Please provide field \'password\'.');
+                }
+
+            } catch (Exception $e) {
+                return $e;
+            }
+            $fields['password'] = password_hash($fields['password'], $hash_algo);
+        }
+
+
+        foreach ($fields as $fieldName => $value) {
+
+        }
+    }
+
+    public static function authenticate()
+    {
+
+    }
 }
