@@ -13,3 +13,9 @@ class ValidationException extends \Exception {}
  */
 class AuthenticationException extends \Exception {}
 
+/**
+ * Class DBconnectException
+ * @package Mackilanu\Autho
+ */
+class DBConnectionException extends \Exception {}
+
