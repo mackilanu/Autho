@@ -1,5 +1,8 @@
 <?php
 namespace Mackilanu\Autho;
+include 'Exceptions.php';
+use Mackilanu\Autho\Exceptions\ValidationException as Exception;
+
 /**
  * Class Autho
  * @package Mackilanu\Autho
