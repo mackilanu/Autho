@@ -1,9 +1,29 @@
 <?php
-
+namespace Mackilanu\Autho;
+/**
+ * Class Autho
+ * @package Mackilanu\Autho
+ *
+ * A lighweight lbrary for handling authentication.
+ *
+ * @author Marcus Andersson
+ */
 class Autho {
 
+    /**
+     * @var string
+     * The privided usrrname
+     */
     private static $username;
+    /**
+     * @var string
+     * The provided password
+     */
     private static $password;
+    /**
+     * @var string
+     * The provided Email adress
+     */
     private static $email;
 
     /**
