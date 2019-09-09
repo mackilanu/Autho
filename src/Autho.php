@@ -45,10 +45,12 @@ class Autho {
         } catch (ValidationException $e) {
             return $e;
         }
-        $fields['password'] = password_hash($data['password'], getenv('HASHING_ALGORITHM'));
+
+        $algo = PASSWORD_BCRYPT;
+        $data['password'] = password_hash($data['password'], $algo);
             try {
                 $user = new User;
-                foreach ($fields as $key => $val) {
+                foreach ($data as $key => $val) {
                     $user->$key = $val;
                 }
                 $user->save();
