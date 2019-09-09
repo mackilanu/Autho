@@ -32,8 +32,16 @@ class Autho {
 
         try {
             $pw_len = getenv('MIN_PASSWORD_LEN');
-            if(strlen($data['password']) < $pw_len)
-                throw new ValidationException("The provided password is too short. The minimum length is {$pw_len}.");
+
+            if(isset($data['password'])) {
+                if (strlen($data['password']) < $pw_len)
+                    throw new ValidationException("The provided password is too short. The minimum length is {$pw_len}.");
+            }
+
+            if(isset($data['email'])) {
+                if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL))
+                    throw new ValidationException("Provided email '{$data['email']}' is not correctly formatted.");
+            }
         } catch (ValidationException $e) {
             return $e;
         }
