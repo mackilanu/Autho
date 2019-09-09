@@ -12,11 +12,15 @@ class User extends Model
 {
 
     protected $fillable = [
-        'email', 'password', 'firstName', 'lastName'
+        'email', 'firstName', 'lastName', 'password'
     ];
 
     protected $hidden = [
         'password', 'remember_token',
     ];
 
+    public function getDefinedFields()
+    {
+        return ['fillable' => $this->fillable, 'hidden' => $this->hidden];
+    }
 }
