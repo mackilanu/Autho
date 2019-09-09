@@ -17,105 +17,27 @@ use PDOException;
  */
 class Autho {
 
-    /**
-     * @var string
-     * The privided usrrname
-     */
-    private static $username;
-    /**
-     * @var string
-     * The provided password
-     */
-    private static $password;
-    /**
-     * @var string
-     * The provided Email adress
-     */
-    private static $email;
-
-    /**
-     * @return string
-     */
-    public static function getUsername() : string
+    public static function registerUser(array $data)
     {
-        return self::$username;
-    }
+        $autho = new User;
+        $definedFields = $autho->getDefinedFields();
+        foreach ($definedFields['fillable'] as $field) {
+           try {
+               if(!isset($data[$field]))
+                   throw new ValidationException("Field '{$field}' is not provided");
+           }catch (ValidationException $e) {
+               return $e;
+           }
+        }
 
-    /**
-     * @param string $username
-     * @param int $minChars
-     * @return bool|Exception
-     */
-    public static function setUsername(string $username, $minChars = 6)
-    {
         try {
-            if(strlen($username) >= $minChars) {
-                self::$username = $username;
-                return true;
-            }
-            throw new Exception("Username is too short, " . $minChars . " is required");
-        }catch (Exception $e) {
+            $pw_len = getenv('MIN_PASSWORD_LEN');
+            if(strlen($data['password']) < $pw_len)
+                throw new ValidationException("The provided password is too short. The minimum length is {$pw_len}.");
+        } catch (ValidationException $e) {
             return $e;
         }
-    }
-
-    /**
-     * @return string
-     */
-    public static function getPassword() : string
-    {
-        return self::$password;
-    }
-
-    public static function setPassword(string $password, $minChars = 8)
-    {
-        try {
-            if (strlen($password) >= $minChars) {
-                self::$username = $password;
-                return true;
-            }
-            throw new Exception("Too few characters");
-        }catch (Exception $e) {
-            return $e;
-        }
-    }
-
-    /**
-     * @return string
-     */
-    public static function getEmail() : string
-    {
-        return self::$email;
-    }
-
-    /**
-     * @param string $email
-     * @return bool|Exception
-     */
-    public static function setEmail(string $email)
-    {
-        try {
-            if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                self::$email = $email;
-                return true;
-            }
-            throw new Exception("Provided email is not an email.");
-        }catch (Exception $e) {
-            return $e;
-        }
-    }
-
-    public static function registerUser(array $fields)
-    {
-            try {
-                if (!isset($fields['password'])) {
-                    throw new Exception('Please provide field \'password\'.');
-                }
-
-            } catch (Exception $e) {
-                return $e;
-            }
-            $fields['password'] = password_hash($fields['password'], getenv('HASHING_ALGORITHM'));
+        $fields['password'] = password_hash($data['password'], getenv('HASHING_ALGORITHM'));
             try {
                 $user = new User;
                 foreach ($fields as $key => $val) {
