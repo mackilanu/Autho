@@ -1,0 +1,12 @@
+{
+    "require": {
+        "illuminate/database": "^6.0",
+        "vlucas/phpdotenv": "^3.5"
+    },
+    "autoload": {
+        "classmap": [
+            "database/models",
+            "src"
+        ],
+    }
+}
