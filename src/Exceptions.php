@@ -19,3 +19,15 @@ class AuthenticationException extends \Exception {}
  */
 class DBConnectionException extends \Exception {}
 
+/**
+ * Class HashingException
+ * @package Mackilanu\Autho
+ */
+class HashingException extends \Exception {}
+
+/**
+ * Class EnvException
+ * @package Mackilanu\Autho
+ */
+class EnvException extends \Exception {}
+
